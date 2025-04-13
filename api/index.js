@@ -1,14 +1,20 @@
-export default function handler(req, res) {
+export const config = {
+  api: {
+    bodyParser: true,
+  },
+};
+
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Only POST method allowed' });
   }
 
-  const mensaje = req.body.mensaje || "";
+  const { mensaje } = req.body;
 
   const respuesta = {
     fecha: new Date().toISOString(),
     remitente: "Desconocido",
-    ciudad: mensaje.includes("Lechería") ? "Lechería" : "",
+    ciudad: mensaje.includes("Lecheria") ? "Lecheria" : "",
     tipo_de_transaccion: mensaje.toLowerCase().includes("venta") ? "Venta" :
                          mensaje.toLowerCase().includes("alquiler") ? "Alquiler" : "",
     tipo_de_inmueble: mensaje.toLowerCase().includes("apartamento") ? "Apartamento" :
@@ -22,7 +28,7 @@ export default function handler(req, res) {
     estacionamientos: mensaje.includes("1 puesto") ? "1" :
                       mensaje.includes("2 puestos") ? "2" : "",
     capacidad: "",
-    precio: mensaje.match(/\\d+\\$/) ? mensaje.match(/\\d+\\$/)[0].replace("$", "") : "",
+    precio: mensaje.match(/\\d+/) ? mensaje.match(/\\d+/)[0] : "",
     precio_m2: "",
     observaciones: mensaje
   };
