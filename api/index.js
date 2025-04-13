@@ -11,6 +11,10 @@ export default async function handler(req, res) {
 
   const { mensaje } = req.body;
 
+  if (!mensaje) {
+    return res.status(400).json({ error: 'Missing mensaje in request body' });
+  }
+
   const respuesta = {
     fecha: new Date().toISOString(),
     remitente: "Desconocido",
