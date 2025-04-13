@@ -9,12 +9,14 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Only POST method allowed' });
   }
 
-  const { mensaje } = req.body;
+  // Aceptamos tanto objeto con "mensaje" como string plano
+  const mensaje = typeof req.body === 'string' ? req.body : req.body.mensaje;
 
   if (!mensaje) {
     return res.status(400).json({ error: 'Missing mensaje in request body' });
   }
 
+  // Simulación de procesamiento del mensaje
   const respuesta = {
     fecha: new Date().toISOString(),
     remitente: "Desconocido",
@@ -32,7 +34,7 @@ export default async function handler(req, res) {
     estacionamientos: mensaje.includes("1 puesto") ? "1" :
                       mensaje.includes("2 puestos") ? "2" : "",
     capacidad: "",
-    precio: mensaje.match(/\d+/) ? mensaje.match(/\d+/)[0] : "",
+    precio: mensaje.match(/\d{5,6}/) ? mensaje.match(/\d{5,6}/)[0] : "",
     precio_m2: "",
     observaciones: mensaje
   };
