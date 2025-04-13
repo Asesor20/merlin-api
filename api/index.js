@@ -32,7 +32,7 @@ export default async function handler(req, res) {
     estacionamientos: mensaje.includes("1 puesto") ? "1" :
                       mensaje.includes("2 puestos") ? "2" : "",
     capacidad: "",
-  precio: mensaje.match(/\d+/) ? mensaje.match(/\d+/)[0] : "",
+    precio: mensaje.match(/\d+/) ? mensaje.match(/\d+/)[0] : "",
     precio_m2: "",
     observaciones: mensaje
   };
